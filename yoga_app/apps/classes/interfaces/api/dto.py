@@ -1,12 +1,12 @@
 from rest_framework import serializers
 
-from yoga_app.apps.classes.domain.entities import YogaClass
+from ...domain.entities import YogaClass
 
 
 class CreateClassResponseDTO(serializers.Serializer):
     id = serializers.UUIDField()
     week_day = serializers.CharField(allow_null=False)
-    start_date = serializers.DateField(format="%d:%m:%y", allow_null=False)
+    start_date = serializers.DateField(format="%d-%m-%y", allow_null=False)
     start_hour = serializers.TimeField(format="%H:%M", allow_null=False)
     class_level = serializers.CharField(min_length=3, max_length=40, allow_blank=False)
     class_name = serializers.CharField(min_length=3, max_length=40, allow_blank=False)
@@ -16,20 +16,20 @@ class CreateClassResponseDTO(serializers.Serializer):
 
     @classmethod
     def from_domain(cls, yoga_class: YogaClass) -> "CreateClassResponseDTO":
-        return cls(
-            id=yoga_class.id,
-            week_day=translate_week_day_to_polish(yoga_class.start_time.weekday()),
-            start_date=yoga_class.start_time,
-            start_hour=yoga_class.start_time,
-            class_level=yoga_class.class_level,
-            class_name=yoga_class.class_name,
-            current_capacity=yoga_class.current_capacity,
-            max_capacity=yoga_class.max_capacity,
-            location=yoga_class.location,
-        )
+        return cls({
+            "id": yoga_class.id,
+            "week_day": translate_week_day_to_polish(yoga_class.start_time.weekday()),
+            "start_date": yoga_class.start_time.date(),
+            "start_hour": yoga_class.start_time.time(),
+            "class_level": yoga_class.class_level,
+            "class_name": yoga_class.class_name,
+            "current_capacity": yoga_class.current_capacity,
+            "max_capacity": yoga_class.max_capacity,
+            "location": yoga_class.location,
+        })
 
 class CreateClassRequestDTO(serializers.Serializer):
-    start_time = serializers.DateTimeField(format="iso8601", allow_null=False)
+    start_time = serializers.DateTimeField(format="iso-8601", required=True)
     class_level = serializers.CharField(min_length=3, max_length=40, allow_blank=False)
     class_name = serializers.CharField(min_length=3, max_length=40, allow_blank=False)
     max_capacity = serializers.IntegerField(min_value=1, allow_null=False)

@@ -1,6 +1,6 @@
 from abc import abstractmethod, ABC
 
-from yoga_app.apps.classes.domain.entities import YogaClass
+from ...domain.entities import YogaClass
 
 
 class IClassesRepository(ABC):

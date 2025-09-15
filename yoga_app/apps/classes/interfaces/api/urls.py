@@ -1,6 +1,9 @@
 from django.urls import path
-from . import views
+from .views import classes_view
+from ...application.service.classes import ClassesService
+
+# classes_repo = ClassesRepo()
 
 urlpatterns = [
-    path("", views.ClassView.as_view(), name="create_classes")
+    path("", classes_view(ClassesService()))
 ]

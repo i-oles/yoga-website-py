@@ -1,11 +1,11 @@
-from yoga_app.apps.classes.domain.entities import YogaClass
-from yoga_app.apps.classes.domain.repositories.repositories import IClassesRepository
+from ...domain.entities import YogaClass
+from ...domain.repositories.repositories import IClassesRepository
 
 
 class ClassesRepo(IClassesRepository):
-    def __init__(self, db):
-        self.db = db
+    def __init__(self):
+        pass
 
     def insert(self, yoga_classes: list[YogaClass]) -> list[YogaClass]:
-        #implement me
+        # TODO: implement me
         return yoga_classes
