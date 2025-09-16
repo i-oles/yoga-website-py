@@ -34,7 +34,7 @@ def classes_view(classes_service: IClassesService):
 
             params.append(param)
 
-        # TODO: find the best way for handling handler errors in django
+        #TODO: handle this error
         inserted_classes = classes_service.create_classes(params)
 
         resp = [CreateClassResponseDTO.from_domain(c).data for c in inserted_classes]
